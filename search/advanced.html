@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Advanced Search</title>
+        <link href="styles.css" rel = "stylesheet">
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    </head>
+    <body>
+        <ul>
+            <li style="float:left; padding:10px 0px; margin-left: 0;"><img src ="logo1.png" width="100" height ="35" ></li>
+            <li><a href="#grid"><img class="grid" src="https://cdn3.iconfinder.com/data/icons/navigation-and-settings/24/Material_icons-01-11-512.png" title="Google apps"></a></li>
+            <li><a href="image.html">Image Search</a></li>
+            <li><a href="index.html">Google search</a></li>
+        </ul> <br>
+        <div class="appbar">
+            <label style="margin-left:10px">Advanced Search</label>
+        </div>
+        <div style = "border-bottom: 2px solid grey;"></div>
+        <div class="formdiv">
+            <label style="margin-left:35px;">Find pages with...</label>
+            <div style="margin-bottom: 20px;"></div>
+            <form action="https://google.com/search" method = "get" id ="advancedsearch" name ="f">
+                <div class="rowtext"> all these words:</div><input name="as_q" class ="advanced" type ="text" autocomplete="off"><br>
+                <div class="rowtext"> this exact word or phrase:</div><input name="as_epq" class ="advanced" type ="text" autocomplete="off"><br>
+                <div class="rowtext"> any of these words:</div><input name="as_oq" class ="advanced" type ="text" autocomplete="off"><br>
+                <div class="rowtext"> none of these words:</div><input name="as_eq" class ="advanced" type ="text" autocomplete="off"><br>
+                <div class="submit_advanced"><input style="background-color: rgb(17, 57, 143); color:white;" type ="submit" value="Advanced Search"></div>
+            </form>
+
+        </div>
+        
+    </body>
+</html>
