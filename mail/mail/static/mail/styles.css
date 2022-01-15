@@ -1,0 +1,29 @@
+body{
+    background-color: rgb(31, 34, 31);
+    color:white;
+}
+textarea {
+    min-height: 400px;
+}
+
+.email-listing{
+    border: 2px solid rgb(107, 99, 99);
+    padding:1%;
+    margin:1.5% 0;
+}
+.time-class{
+    float: right;
+}
+
+.subject-class{
+    margin: 0 2%;
+    text-decoration: bold;
+}
+
+.email-body{
+    border:2px solid rgb(107, 99, 99);
+    border-radius: 5px;
+    padding:2% 3%;
+    min-height: 80%;
+    margin:1% 0;
+}
