@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+{% load static %} 
+
+{% block title %}Create listing{% endblock %}
+
+{% block body %}
+
+<form action = "{% url 'create_listing' %}" method="post">
+    {% csrf_token %}
+    <input type="text" placeholder="Item name" name="item_name" required>
+    <div class="form-group" style= "width: 17.3%; margin:10px 0;">
+        <select class="form-control" name="category" placeholder="Category" required>
+            <option value="">Choose a Category</option>
+            <option value="fashion">Fashion</option>
+            <option value="tools">Tools</option>
+            <option value="toys">Toys</option>
+            <option value="electronics">Electronics</option>
+            <option value="accessories">Accessories</option>
+            <option value="books">Books</option>
+        </select>
+    </div>
+    <input type="text" placeholder="URL for item image" name="link">
+    <textarea style="margin:10px 0" class="form-control" name="description" rows="4" placeholder="Description" required></textarea>
+    <input type="number" placeholder="Starting bid($)" name = "price" required>
+    <input class="btn btn-primary" type="submit" placeholder="Item name" name = "item" value="Create">
+</form>
+{% endblock %}

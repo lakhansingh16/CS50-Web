@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+{% load static %} 
+
+{% block title %}Watchlist{% endblock %}
+
+{% block body %}
+    {% if message %}
+    <div class="alert alert-{{msg_type}}">{{ message }}</div>
+    {% endif%}
+    <h1>{{categ}}</h1>
+    {% if empty %}
+        <br>
+        <img src="http://www.ebed.in/images/noitem.png" alt="indeximage" style="height: 350px;" class="embed-responsive">
+        <br> <br> <br>
+    {% else %}
+        {% for product in products %}
+        <div style="display:block; border:2px solid yellow; object-fit:cover; overflow-y:hidden;">
+            <a href="{% url 'listing' product.id %}" style="text-decoration: none;"><img src="{{product.photo_link}}" alt="{{product.product}}" style="height:auto; width:20%;float:left; margin:1% 5% ; "></a>
+            <a href="{% url 'listing' product.id %}" style="text-decoration: none;"><h2 style="padding: 10px;">{{product.article}}</h2></a>
+            <h5>Current price: ${{product.price}}</h5>
+            <strong><p>Description: {{ product.description}}</p></strong>
+            <p>Created {{product.Date}},  {{product.Time}}</p>
+        </div><br>
+    {% endfor %}
+    {% endif %}
+{% endblock %}

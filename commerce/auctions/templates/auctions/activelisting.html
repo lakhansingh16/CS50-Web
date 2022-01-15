@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block title %}Active listings{% endblock %}
+{% block body %}
+<h2>Active Listings</h2>
+{% for article in articles %}
+    <div style="display:block; border:2px solid yellow; object-fit:cover; overflow-y:hidden;">
+        <a href="{% url 'listing' article.id %}" style="text-decoration: none;"><img src="{{article.photo_link}}" alt="{{article.article}}" style="height:auto; width:20%;float:left; margin:1% 5% ; "></a>
+        <a href="{% url 'listing' article.id %}" style="text-decoration: none;"><h2 style="padding: 10px;">{{article.article}}</h2></a>
+        <h5>Current price: ${{article.price}}</h5>
+        <strong><p>Description: {{ article.description}}</p></strong>
+        <p>Created {{article.Date}},  {{article.Time}}</p>
+    </div><br>
+{% endfor %}
+{%endblock%}

@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block title %}Auctions{% endblock %}
+
+{% block body %}
+<div>
+    <img src="{% static 'auctions/logo.jpg' %}" style="display: block; width:50%; margin-left: auto; margin-right: auto; margin-bottom: 10px;">
+    <h3 style="text-align: center; display: block; width:70%; margin-left: auto; margin-right: auto; border:2px solid rgb(196, 52, 33); color:seagreen;padding:10px; border-radius: 15px;">
+        This is an e-commerce website where you can bid on items put up for 
+        sale by different people. Chose by category, and bid on the item. 
+        If the bid closes on your bid, you get the item. Add items in your watchlist to 
+        see later. Also, see the closed listings and prices they sold for.
+    </h3> 
+    <div style="border-top: 2px solid red;margin:15px 0;">
+        <h3 style="text-align: center;">&#169 Lakhan Singh Barod 2021</h1>
+    </div>
+</div>
+
+{% endblock %}
