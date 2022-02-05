@@ -1,0 +1,133 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+
+{% block title %}
+    {% if profileuser.first_name and profileuser.last_name %}
+    {{profileuser.first_name|title}} {{profileuser.last_name|title}} | Network
+    {% else %}
+    {{profileuser.username|title}} | Network
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+<br>
+<div class="profile">
+    {% if profileuser.first_name and profileuser.last_name %}
+    <h4 class="details-name">{{profileuser.first_name|title}} {{profileuser.last_name|title}}
+    {% else %}   
+    <h4 class="details-name">{{profileuser.username|title}}</h4>
+    {% endif %}  
+    </h4>
+    <p><span class="postbutton">{{posts}} Posts </span>
+        <button class ="followerbutton" type="button" >{{totalfollower}} Followers </button>
+        <button class ="followerbutton" type="button" >{{totalfollowing}} Following </button>
+    </p>
+    {% if user.username != profileuser.username %}
+        {% if not followingEachOther %}
+        <form class="text-right" method="post" action="{% url 'profile' username=profileuser.username %}">
+            {% csrf_token %}
+            <button class="btn btn-success" type="submit" value="Follow">Follow</i></button>
+        </form>
+        {% elif followingEachOther %}
+        <form class="text-right" method="post" action="{% url 'profile' username=profileuser.username %}">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit" value="Unfollow">Unfollow</button>
+        </form>
+        {% endif %}
+    {% endif %}
+  </div>
+  <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title details-name" id="exampleModalLongTitle">Total Followers: {{totalfollower}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% for follow in follower %}
+          <p class="card-header"><a href="{% url 'profile' username=follow.follower %}">{{follow.follower|title}}</a></p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="following" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title details-name" id="exampleModalLongTitle">Total Following: {{totalfollowing}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% for follow in following %}
+          <p class="card-header"><a href="{% url 'profile' username=follow.target %}">{{follow.target|title}}</a></p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% if user.username == profileuser.username %}
+  <div class="compose-post">
+    <h2 style="padding: 1%;">New Post</h2>
+    <form method=post action="{% url 'newpost' username=user.username %}" >
+      {% csrf_token %}
+      <div class="compose-form">
+        <textarea class="form-control" name="textarea" placeholder="New Post"></textarea>
+      </div>
+      <input value="Post" style="margin:0.5%;" type="submit" class="btn btn-primary"/>
+    </form>
+  </div>
+  {% endif %}
+  
+  <br>
+  {% for post in page_obj %}
+  <div class="card border-secondary mb-3 post-object{{post.id}}">
+    <h5 class="card-header"><a href="{% url 'profile' username=post.user %}">{{post.user|title}}</a></h5>
+    <div class="card-body text-secondary">
+      <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+      <p class="card-text post-object-content{{post.id}}">{{post.content}}</p>
+        {% if user.is_authenticated %}
+          {% if request.user in post.liked.all %}
+          <a href="{% url 'likepost' postid=post.id %}"><i class="fa fa-heart" id="heart{{post.id}}" style="color:red;"></i></a><span id="liked{{post.id}}">{{post.liked.all.count}}</span>
+          {% else %}
+          <a href="{% url 'likepost' postid=post.id %}"><i class="fa fa-heart" id="heart{{post.id}}" style="color:black;"></i></a><span id="liked{{post.id}}">{{post.liked.all.count}}</span>
+          {% endif %}
+        {% else %}
+            <p class="total-likes">Likes: {{post.liked.all.count}}</p>
+        {% endif %}
+        {% if request.user == post.user%}
+        <a href="{% url 'edit' post_id=post.id %}"><button class="btn btn-dark">Edit</button></a>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+<hr>
+
+<div class="container">
+  <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+          <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a></li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link">Previous</a></li>
+      {% endif %}
+      {% if page_obj.number %}
+      <li class="page-item"><a class="page-link">{{ page_obj.number }}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link">0</a></li>
+      {% endif %}
+      {% if page_obj.has_next %}
+      <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a></li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link">Next</a></li>
+      {% endif %}
+  </ul>
+</div>
+
+{% endblock %}

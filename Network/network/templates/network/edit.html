@@ -1,0 +1,14 @@
+{% extends 'network/layout.html' %}
+{% block body %}
+<div class="compose-post">
+    <h2 style="padding: 1%;">New Post</h2>
+    <form method=post action="{% url 'edit' post_id=post_object.id %}" >
+        {% csrf_token %}
+        <div class="compose-form">
+            <textarea class="form-control" name="textarea">{{post_object.content}}</textarea>
+        </div>
+        <input value="Post" style="margin:0.5%;" type="submit" class="btn btn-primary"/>
+    </form>
+</div>
+
+{% endblock %}

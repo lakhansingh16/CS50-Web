@@ -1,0 +1,60 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+{% if message %}
+<div style="margin: 2%;"> 
+    <div class="alert alert-info" role="alert">
+        {{message}}
+    </div>
+</div>
+{% endif %}
+<br><br>
+{% for post in page_obj %}
+<div class="card border-secondary mb-3 post-object{{post.id}}">
+    <h5 class="card-header"><a href="{% url 'profile' username=post.user %}">{{post.user|title}}</a></h5>
+    <div class="card-body text-secondary">
+      <h6 class="card-subtitle mb-2 text-muted">{{post.date}}</h6>
+      <p class="card-text post-object-content{{post.id}}">{{post.content}}</p>
+        {% if user.is_authenticated %}
+        {% if request.user in post.liked.all %}
+        <a href="{% url 'likepost' postid=post.id %}"><i class="fa fa-heart" id="heart{{post.id}}" style="color:red;"></i></a><span id="liked{{post.id}}">{{post.liked.all.count}}</span>
+        {% else %}
+        <a href="{% url 'likepost' postid=post.id %}"><i class="fa fa-heart" id="heart{{post.id}}" style="color:black;"></i></a><span id="liked{{post.id}}">{{post.liked.all.count}}</span>
+        {% endif %}
+        {% else %}
+            <p class="total-likes">Likes: {{post.liked.all.count}}</p>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% if request.user == post.user%}
+<a href="{% url 'edit' post_id=post.id %}"><button class="btn btn-dark">Edit</button></a>
+{% endif %}
+
+</div>
+<hr>
+{% if not message %}
+<div class="container">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link">Previous</a></li>
+        {% endif %}
+        {% if page_obj.number %}
+        <li class="page-item"><a class="page-link">{{ page_obj.number }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link">0</a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link">Next</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

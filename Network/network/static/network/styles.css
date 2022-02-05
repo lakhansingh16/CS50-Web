@@ -1,0 +1,38 @@
+body{
+    margin: 2%;
+    background-color: rgb(104, 100, 99);
+}
+#username{
+    float: right;
+}
+textarea{
+    min-height: 150px;
+    padding:1%;
+}
+.compose-post{
+    border:2px solid black;
+    margin:2% 0;
+    background: rgb(219, 219, 219);
+}
+.profile{
+    
+    border: 1px solid black; 
+    padding: 2%; 
+    background-color: rgb(214, 209, 209);
+    text-align: center;
+}
+
+.postbutton{
+    border-radius: 5px;
+    margin:0 2% ;
+    background-color: blanchedalmond;
+    padding: 1%;
+}
+.followerbutton{
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: grey;
+    border: none;
+    padding: 1%;
+    margin:0 2%;
+}
